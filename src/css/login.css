@@ -1,0 +1,66 @@
+body{width: 100%;height: 100%;background: #e0e0e0;letter-spacing: .5px;font-family: "microsoft yahei";}
+.body_all{background-image: url(img/body_bg.png);background-repeat: repeat-x;background-size: auto;}
+.inner{width: 950px;height: 746px;background-image: url(img/register_bg.png);background-size: auto;margin:0 auto;background-position: 0 px;}
+.index_logo{display:block;width: 369px;height: 36px;margin: 0px auto 0px auto;padding-top: 30px;}
+.index_logo div{float: left;height: 36px;background-image: url(img/base.png);}
+.logo_bg_1{width: 189px;background-position: -851px -325px;}
+.logo_bg_2{width: 180px;background-position: -859px -101px;}
+.login_main{width: 350px;height: 483px;float: right;margin-right: 150px;margin-top: 60px;}
+/*背景图与logo-----end*/
+/*验证区star--*/
+.register_top1{width: 260px;height: 21px;margin-left: 80px;padding-bottom: 10px;}
+.register_top1 a{font-size: 14px;color: #db2725;text-decoration: underline;}
+.register_top1 span{font-size: 12px;font-family: "微软雅黑";float: right;}
+.register_top1 h2{float: left;font-size: 16px;font-weight: bold;}
+
+.register_body {width: 350px;}
+.register_body li{width: 350px;margin-bottom: 10px;}
+.register_body li p{display: none;}
+.register_body li span{width: 65px;height: 30px;text-align: right;margin-right: 10px;line-height: 30px;white-space: nowrap;float: left;font-size: 12px;font-family: "微软雅黑";}
+#yz_txt{width: 133px;height: 28px;border: 1px solid #999;float: right;margin-right: 5px;}
+
+.register_body input{width: 263px;height:28px;border: solid 1px #999;padding: 0 0 0 5px;}
+.register_body .yanzheng{width: 118px;}
+/*立即注册*/
+.register_btn a{display:block;text-align:center;margin-left:75px;width: 270px;height: 35px;line-height: 35px;font-size: 14px;font-family:"microsoft yahei";color: white;background: #db2725;}
+.register_sytk{width: 260px;height: 18px;margin-top: 8px;margin-left: 75px;}
+.register_sytk a{text-decoration: underline;color: black;}
+.register_sytk a:hover{color: #db2725;}
+.login_selected{width: 270px;height: 16px;margin-top: 8px;margin-left: 75px;font-size: 12px;}
+/*自动登录*/
+.login_selected span{display:block;float:left;width: 12px;height: 12px;margin-right: 2px;border: 1px solid #999;}
+.login_autoclass{background-image: url(img/icon_selected.png);}
+.login_selected a{width: 50px;height: 16px;text-decoration: underline;color: black;float: right;}
+.login_selected a:hover{color: #db2725;}
+.register_partner{margin-top:20px ;width: 350px;height: 15px;}
+.register_partner h4{width: 65px;height: 16px;text-align: right;float: left;margin-right: 15px;}
+.register_partner a{height:17px;margin-right: 25px;float: left;}
+.register_weibo{width: 20px;background-image: url(img/icon_weibo.png);}
+.register_weibo:hover{background-image: url(img/icon_weibo_03.png);}
+.register_zhifubao{width: 44px; background-image: url(img/icon_zhifubao.png);}
+.register_zhifubao:hover{background-image: url(img/icon_zhifubao_03.png);}
+.xian{width: 350px;height: 1px;background:#999999;margin-top: 19px;margin-bottom: 20px;}
+.erweima{margin-left: 90px;}
+.erweima p{float: right;line-height: 20px;margin-top: 16px;margin-right: 18px;}
+.erweima img{float: left;}
+/*验证提示信息*/
+.register_body p{width: 260px;height: 12px;color:red;text-align: left;margin-left: 75px;margin-top: 3px;font-size: 12px;}
+#lowHigh{width: 270px;height: 15px;margin-top: 5px;margin-left: 75px;}
+#lowHigh span {width: 89px;height: 15px;border-left: 1px solid white;float: left;margin: 0;background: #929292;}
+#yz_txt{text-align: center;font-size: 20px;font-weight: bold;line-height: 30px;cursor: pointer;letter-spacing: 2px;background: wheat;}
+/*底部*/
+.register_bottom{width: 1000px;margin:0 auto;font-family: "微软雅黑";font-size: 12px;text-align: center;}
+.register_bottom li{float: left;}
+.add_1{background-position: -187px -269px !important;}	
+.add_2{background-position: -570px 0px !important;}
+.add_3{background-position: -336px -234px !important;}
+.add_4{background-position: -450px -112px !important;}
+.add_5{background-position: -333px -464px !important;}
+.add_6{background-position: -335px 2px !important;}
+.buttom-1{height:60px;margin-bottom: 20px;}
+.buttom-1 li div{background-image: url(img/base.png);height: 36px;}
+.buttom-1 li p{height: 12px;width:110px;}
+.buttom-1:last-child{border-right: none !important;}
+.buttom-1 li a{color: black;}
+.buttom-1 li{width:105px;height: 48px;padding: 6px 30px;border-right: 1px solid #777777;cursor: pointer;}
+.buttom-3{width:483px;height: 12px;padding-top: 23px;letter-spacing: .5px;margin: 0 auto;margin-bottom: 20px;}

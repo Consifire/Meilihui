@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/reset.css" />
+		<link rel="stylesheet" href="../css/login.css" />
+		<script src="../js/jquery-1.12.0.js"></script>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/register_login_buttom.js"></script>
+		<script>
+			$(function(){
+				var flag=true;//验证正确
+				//var before_input;
+				//注册信息验证
+				
+				//所有非密码框无法输入汉字
+				$("input[type='text']").on("input",function(){
+					before_input=$(this).val();
+					var reg=/[\u2E80-\u9FFF]+/g;
+					var self=$(this);
+					if (reg.test( $(this).val() ) ) {
+						var str=self.val();
+						str=str.replace(reg,"");
+						self.val(str);
+					}
+				});
+				//账户名验证
+				$("input").eq(0).blur(function(){
+					var isTrue=/^1\d{10}$/.test($(this).val())||/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test($(this).val());
+					if (isTrue) {
+						//$("#zhm").html("账户名合法").show();
+						$("#zhm").hide();
+						flag=true;
+					}else{
+						$("#zhm").html("请输入正确的手机号或邮箱").show();
+						flag=false;
+					}
+				});
+				//密码输入实时监听
+				$("input").eq(1).on("input",function(){
+					if ($(this).val()!="") {
+						$(".password_error").hide();
+					}
+				})
+				//验证码
+					/*
+					** randomWord 产生任意长度随机字母数字组合
+					** randomFlag（true/false）-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+					*/			
+				function randomWord(randomFlag, min, max){
+				    var str = "",
+				        range = min,
+				        arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+				 
+				    // 随机产生
+				    if(randomFlag){
+				        range = Math.round(Math.random() * (max-min)) + min;
+				    }
+				    for(var i=0; i<range; i++){
+				        pos = Math.round(Math.random() * (arr.length-1));
+				        str += arr[pos];
+				    }
+				    return str;
+				}
+				
+				var yzm=randomWord(false,4);
+				$("#yz_txt").html(yzm);
+				$("#yz_txt").click(function(){
+					var yzm=randomWord(false,4);
+					$("#yz_txt").html(yzm);
+				});
+				$(".yanzheng").blur(function(){
+					if ($(this).val()==$("#yz_txt").html()) {
+						$("#checkYzm").hide();
+						flag=true;
+					}else{
+						$("#checkYzm").show();
+						flag=false;
+					}
+				});
+				//是否自动登录按键效果
+				$(".login_auto").click(function(){
+					$(this).toggleClass("login_autoclass");
+				});
+				//点击登录
+				$(".register_btn").click(function(){
+					if ($("#yz_txt").html()!=$(".yanzheng").val()) {
+						$("#checkYzm").show();
+						flag=false;
+					}else{
+						$("#checkYzm").hide();
+						flag=true;
+					}
+					if ($("input").eq(1).val()=="") {
+						$(".password_error").html("密码不能为空").show();
+					}
+					//获取cookie中相对应的密码用以对比
+					var passWord=getCookie($("input").eq(0).val()+"password");
+					var userName=getCookie($("input").eq(0).val());
+					console.log(userName=="");
+					console.log(flag);
+					console.log($("input").eq(0).val()!=""&&$("input").eq(1).val()!=""&&$("input").eq(2).val()!="");
+					console.log($(".login_auto").is(".login_autoclass"));
+					if (flag==true&&$("input").eq(0).val()!=""&&$("input").eq(1).val()!=""&&$("input").eq(2).val()!="") {
+						if (userName=="") {
+							console.log("bucunzai")
+							$("#zhm").html("账户名不存在！").show();
+						}else{
+							
+							if ($("input").eq(1).val()==passWord) {
+								//alert("成功登录");
+								$("body").load("../index.html");
+								
+								
+							}else{
+								$(".password_error").html("登录失败，密码错误").show();
+							}
+						}
+						
+					}
+				});
+				
+				//底部样式封装js函数调用
+				buttom_class();
+			})
+		</script>
+	</head>
+	<body>
+		<div class="body_all">
+			<div class="inner">
+				<a href="../index.html" class="index_logo">
+					<div class="logo_bg_1"></div>
+					<div class="logo_bg_2"></div>
+				</a>
+				<div class="login_main">
+					<div class="register_top1">
+						<h2>会员登录</h2>
+						<span>
+							没有帐号？
+							<a href="register.html">免费注册</a>
+						</span>
+					</div>
+					
+					<div class="register_body">
+						<ul>
+							<li>
+								<span>账户名:</span>
+								<input type="text" placeholder="已验证手机号/邮箱"/>
+								<p id="zhm">请输入正确的手机号或邮箱</p>
+							</li>
+							<li>
+								<span>密码:</span>
+								<input type="password" />
+								<p class="password_error">登录失败，密码错误</p>
+								
+							</li>
+						
+							<li>
+								<span>验证码:</span>
+								<input type="text" class="yanzheng" placeholder="区分大小写"/>
+								<span id="yz_txt">
+									
+								</span>
+								<p id="checkYzm">验证码不正确</p>
+							</li>
+							
+						</ul>
+					</div>
+					<div class="register_btn">
+						<a href="#">会员登录</a>
+					</div>
+					
+					<div class="login_selected">
+						<span class="login_auto"></span>
+						
+						下次自动登录
+						<a href="http://www.mei.com/user/tofindPassWord?spm=a2o1p.8153018.2028697.1.c4E9sE">忘记密码</a>
+					</div>
+					<div class="register_partner">
+						<h4>联名登录:</h4>
+						<a href="https://api.weibo.com/oauth2/authorize?client_id=2399138537&redirect_uri=http://www.mei.com/&response_type=code" class="register_weibo"></a>
+						<a href="https://auth.alipay.com/login/express.htm?goto=https%3A%2F%2Fmemberexprod.alipay.com%3A443%2Fauthorize%2FuserAuthQuickLoginAction.htm%3Fe_i_i_d%3Dfa8d1b6df55a6564353bf840875b70d1" class="register_zhifubao"></a>
+					</div>
+					<div class="xian"></div>
+					<div class="erweima">
+						<img src="../css/img/saomiao.jpg" />
+						<p>
+							扫描二维码或发送短信
+							<br />
+							“MLH”到“12114”
+							<br />
+							下载APP尊享独家优惠
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="register_bottom">
+				<ul class="buttom-1">
+					<li><a href="#">
+						<div style="background-position: -187px -151px;"></div>
+						<p>100%品牌授权正品</p></a>
+					</li>
+					<li><a href="#">
+						<div style="background-position: -570px -111px;"></div>
+						<p>满688免运费</p></a>
+					</li>
+					<li><a href="#">
+						<div style="background-position: -185px -387px;"></div>
+						<p>7天无条件退换货</p></a>
+					</li>
+					<li><a href="#">
+						<div style="background-position: -450px 0px;"></div>
+						<p>超值折扣</p></a>
+					</li>
+					<li><a href="#">
+						<div style="background-position: -333px -351px;"></div>
+						<p>9点限时闪购</p></a>
+					</li>
+					<li style="border: none;"><a href="#">
+						<div style="background-position: -335px -115px;"></div>
+						<p>400-664-6698</p></a>
+					</li>
+				</ul>
+				<ul class="buttom-3">
+					<li>COPYRIGHT&copy;2015魅力惠（上海）贸易有限公司版权所有</li>
+					<li style="padding-left: 30px;">沪ICP备10004993号</li>
+				</ul>
+			</div>
+		</div>
+		
+	</body>
+</html>
