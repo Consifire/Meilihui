@@ -108,10 +108,11 @@
 							$("#zhm").html("账户名不存在！").show();
 						}else{
 							
-							if ($("input").eq(1).val()==passWord) {
-								//alert("成功登录");
-								$("body").load("../index.html");
-								
+							if ($("input").eq(1).val()==passWord) {//如果输入密码和储存的密码一致
+								console.log("成功登录");
+								setCookie("username",$("input").eq(0).val(),10,'/');//储存登录成功的账户名，以便在头部用户信息处显示
+								//$("body").load("../index.html");
+								location.href="../index.html";
 								
 							}else{
 								$(".password_error").html("登录失败，密码错误").show();
@@ -127,6 +128,7 @@
 		</script>
 	</head>
 	<body>
+		<form action="../index.html"></form>
 		<div class="body_all">
 			<div class="inner">
 				<a href="../index.html" class="index_logo">

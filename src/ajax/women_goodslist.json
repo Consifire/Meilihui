@@ -4,6 +4,7 @@
 		"good_type":"不容错过的精选特卖",
 		"good_off":"0.6",
 		"good_src":"../img/women_goodslist/woman (50).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满1000元，减100元；以此类推，最高减至500元。",
 		"over_time":6
 	},
@@ -12,6 +13,7 @@
 		"good_type":"德国舒雅 女士保暖",
 		"good_off":"2.4",
 		"good_src":"../img/women_goodslist/woman (1).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满2000元，减100元；以此类推，最高减至100元。",
 		"over_time":7
 	},
@@ -20,6 +22,7 @@
 		"good_type":"女士秋冬皮衣羽绒服",
 		"good_off":"2.3",
 		"good_src":"../img/women_goodslist/woman (2).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满500元，减100元；以此类推，最高减至200元。",
 		"over_time":4
 	},
@@ -28,6 +31,7 @@
 		"good_type":"意大利女装",
 		"good_off":"2.6",
 		"good_src":"../img/women_goodslist/woman (3).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满800元，减100元；以此类推，最高减至600元。",
 		"over_time":2
 	},
@@ -36,6 +40,7 @@
 		"good_type":"不容错过的精选特卖",
 		"good_off":"0.6",
 		"good_src":"../img/women_goodslist/woman (50).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满1000元，减100元；以此类推，最高减至500元。",
 		"over_time":6
 	},
@@ -44,6 +49,7 @@
 		"good_type":"德国舒雅 女士保暖",
 		"good_off":"2.4",
 		"good_src":"../img/women_goodslist/woman (1).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满2000元，减100元；以此类推，最高减至100元。",
 		"over_time":7
 	},
@@ -52,6 +58,7 @@
 		"good_type":"女士秋冬皮衣羽绒服",
 		"good_off":"2.3",
 		"good_src":"../img/women_goodslist/woman (2).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满500元，减100元；以此类推，最高减至200元。",
 		"over_time":4
 	},
@@ -60,6 +67,7 @@
 		"good_type":"意大利女装",
 		"good_off":"2.6",
 		"good_src":"../img/women_goodslist/woman (3).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满800元，减100元；以此类推，最高减至600元。",
 		"over_time":2
 	},{
@@ -67,6 +75,7 @@
 		"good_type":"不容错过的精选特卖",
 		"good_off":"0.6",
 		"good_src":"../img/women_goodslist/woman (50).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满1000元，减100元；以此类推，最高减至500元。",
 		"over_time":6
 	},
@@ -75,6 +84,7 @@
 		"good_type":"德国舒雅 女士保暖",
 		"good_off":"2.4",
 		"good_src":"../img/women_goodslist/woman (1).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满2000元，减100元；以此类推，最高减至100元。",
 		"over_time":7
 	},
@@ -83,6 +93,7 @@
 		"good_type":"女士秋冬皮衣羽绒服",
 		"good_off":"2.3",
 		"good_src":"../img/women_goodslist/woman (2).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满500元，减100元；以此类推，最高减至200元。",
 		"over_time":4
 	},
@@ -91,6 +102,7 @@
 		"good_type":"意大利女装",
 		"good_off":"2.6",
 		"good_src":"../img/women_goodslist/woman (3).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满800元，减100元；以此类推，最高减至600元。",
 		"over_time":2
 	},{
@@ -98,6 +110,7 @@
 		"good_type":"不容错过的精选特卖",
 		"good_off":"0.6",
 		"good_src":"../img/women_goodslist/woman (5).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满1000元，减100元；以此类推，最高减至500元。",
 		"over_time":6
 	},
@@ -106,6 +119,7 @@
 		"good_type":"德国舒雅 女士保暖",
 		"good_off":"2.4",
 		"good_src":"../img/women_goodslist/woman (6).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满2000元，减100元；以此类推，最高减至100元。",
 		"over_time":7
 	},
@@ -114,6 +128,7 @@
 		"good_type":"女士秋冬皮衣羽绒服",
 		"good_off":"2.3",
 		"good_src":"../img/women_goodslist/woman (7).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满500元，减100元；以此类推，最高减至200元。",
 		"over_time":4
 	},
@@ -122,6 +137,7 @@
 		"good_type":"意大利女装",
 		"good_off":"0.8",
 		"good_src":"../img/women_goodslist/woman (8).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满800元，减100元；以此类推，最高减至600元。",
 		"over_time":2
 	},
@@ -130,6 +146,7 @@
 		"good_type":"意大利女装",
 		"good_off":"2.6",
 		"good_src":"../img/women_goodslist/woman (38).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满800元，减100元；以此类推，最高减至600元。",
 		"over_time":2
 	},
@@ -138,6 +155,7 @@
 		"good_type":"不容错过的精选特卖",
 		"good_off":"0.6",
 		"good_src":"../img/women_goodslist/woman (8).jpg",
+		"good_url":"goods_list.html",
 		"good_Promotions":"购满1000元，减100元；以此类推，最高减至500元。",
 		"over_time":3
 	}

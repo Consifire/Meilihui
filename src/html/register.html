@@ -171,8 +171,8 @@
 							oDate.setDate(oDate.getDate()+10);
 							setCookie($("input").eq(0).val(),$("input").eq(0).val(),oDate);
 							setCookie($("input").eq(0).val()+"password",$("input").eq(2).val(),oDate);
-								
-							$("html").load("Login.html");
+							$("form").submit();
+							//$("html").load("Login.html");//这样load进来的登录页面有问题
 						}else{
 							console.log("注册失败");
 						}
@@ -185,6 +185,7 @@
 		</script>
 	</head>
 	<body>
+		<form action="Login.html"></form>
 		<div class="body_all">
 			<div class="inner">
 				<a href="../index.html" class="index_logo">

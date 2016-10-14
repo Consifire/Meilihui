@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/detail.css" />
+		<link rel="stylesheet" href="../assets/myPlugins/css/jquery.myPlugins.css" />
+		<script type="text/javascript" src="../js/cookie.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.12.0.js" ></script>
+		<script type="text/javascript" src="../assets/myPlugins/js/jquery.myPlugins.js" ></script>
+		
+		<script>
+			jQuery(function($){
+				var arr=[];
+				var flag=false;//判断是否选了尺寸
+				$("#herit").load("women_goods.html",function(){
+					$(".inner_body").remove();
+					$("#detail_body").insertBefore($(".buttom"));
+				});	
+				//table样式
+				$(".size_table_body").find("tr:even").css("background","#E7E7E7");
+				//点击小图更换大图
+				$(".product_view_small").find("img").click(function(){
+					var src=$(this).attr("src");
+					var pattern = "small";
+					src = src.replace(new RegExp(pattern), "big");
+					console.log(src);
+					$(".product_view_big").find("img").attr("src",src);
+				});
+				//划过尺寸效果
+				$(".product_chose_size").find("li").hover(function(){
+					$(this).addClass("size_addclass2");
+					$(this).children(".size_pop").show();
+				},function(){
+					$(this).removeClass("size_addclass2");
+					$(this).children(".size_pop").hide();
+				});
+				//选择尺寸
+				$(".product_chose_size").find("li").click(function(){
+					flag=true;//已选择尺寸
+					$(this).addClass("size_addclass").siblings().removeClass("size_addclass");
+				});
+				//封装时间
+				
+				function show_time(){ 
+					 var time_start = new Date().getTime(); //设定当前时间
+					 var time_end =  new Date("2016/10/15 00:00:00").getTime(); //设定目标时间
+					    // 计算时间差 
+					 var time_distance = time_end - time_start; 
+					    // 天
+					 var int_day = Math.floor(time_distance/86400000) 
+					 time_distance -= int_day * 86400000; 
+					    // 时
+					 var int_hour = Math.floor(time_distance/3600000) 
+					 time_distance -= int_hour * 3600000; 
+					    // 分
+					 var int_minute = Math.floor(time_distance/60000) 
+					 time_distance -= int_minute * 60000; 
+					    // 秒 
+					 var int_second = Math.floor(time_distance/1000) 
+					    // 时分秒为单数时、前面加零 
+					    if(int_day < 10){ 
+					        int_day = "0" + int_day; 
+					    } 
+					    if(int_hour < 10){ 
+					        int_hour = "0" + int_hour; 
+					    } 
+					    if(int_minute < 10){ 
+					        int_minute = "0" + int_minute; 
+					    } 
+					    if(int_second < 10){
+					        int_second = "0" + int_second; 
+					    } 
+					    // 显示时间 
+					    $(".day").html(int_day);
+					    $(".hours").html(int_hour);
+					    $(".minute").html(int_minute);
+					    $(".sec").html(int_second);
+					   // 设置定时器
+					    setTimeout(show_time,1000); 
+					}
+				//调用封装函数
+				$(function(){ 
+					show_time();
+				}); 
+				//放大镜效果
+				$(".product_view_big").myZoomImg({
+	    			_width:300,        //放大镜、小图宽度
+					_height:300,       //放大镜高度
+					gap:100,            //大图与小图的间距
+					_position:"right", //大图位置
+					bgColor:"green"      //放大镜模拟框的背景颜色
+	    		});
+	    		//数量加减
+	    		$(".delete_num").click(function(){
+					var num=$(".buy_num").html();
+					if (num>1) {
+						num--;
+						$(".buy_num").html(num);
+						
+					}
+				});
+				$(".add_num").click(function(){
+					var num=$(".buy_num").html();
+					if (num>=0) {
+						num++;
+						$(".buy_num").html(num);
+					
+					}
+				});
+				//加入购物袋
+				$(".btn_incar").click(function(){
+					if (flag==true) {
+						//品牌名
+						var brand=$(".product_title").find("p").html();
+						//商品名
+						var name=$(".product_name").html();
+						//颜色
+						var color=$(".product_choselist").find("strong").html();
+						//尺寸
+						var size=$(".size_addclass").find("span").html();
+						//图片路径
+						var src=$(".product_choselist").find("img").attr("src");
+						//单价
+						var unit=$(".cut_price").find("b").text();
+						//数量
+						var num=$(".buy_num").text();
+				
+						var obj={
+									"brand":brand,
+									"name":name,
+									"color":color,
+									"size":size,
+									"src":src,
+									"unit":unit,
+									"num":num
+								}
+						arr.push(obj);
+						console.log(arr);
+						//更新保存cookie
+						
+						
+						setCookie("goods",JSON.stringify(arr),10,'/');
+						//购物袋弹出显示
+						var goodsCookie=getCookie("goods");
+						var $bag=$(".bag");
+						var $total_price=$(".total_p");
+						//获取cookie数据
+						if (goodsCookie) {
+							goodsArr=JSON.parse(goodsCookie);
+							var n=0;//数量
+							var m=0;//总价
+							for (var i=0;i<goodsArr.length;i++) {
+								//遍历取商品数
+								n+=parseInt(goodsArr[i].num);
+							}
+							m=goodsArr[0].unit;
+							m=n*m;
+							console.log(m);
+							$bag.html(n);//数量
+							$total_price.html(m);//总价
+							$(".shopping_bag_list").find("p").remove();
+							 var $ul11=  $(".incar_list");
+                  			 var $Lia=  $("<li/>");
+                      		 $("<img src="+goodsArr[0].src+">").appendTo($Lia);
+                     	  	$("<span class='total_num'>"+n+"</span>").appendTo($Lia);
+                     	    $("<span class='all_price'>"+goodsArr[0].unit+"</span>").appendTo($Lia);
+                    	    $("<span class='remove_this'>删除</span>").appendTo($Lia);
+                 		    $Lia.appendTo($ul11);
+
+							
+						}
+						$(".shopping_bag_list").slideDown("slow",function(){
+							$(".shopping_bag_list").slideUp();
+						});
+					} else{
+						alert("亲，您还没选择尺寸呢^.^");
+					}
+					
+					
+				});
+				$(".remove_this").click(function(){
+					$(this).parent().empty();
+					var str=[];
+					setCookie("goods",JSON.stringify(str),10,'/');
+				});
+			});		
+		</script>
+	</head>
+	<body>
+		<div id="herit" style="min-height: 150px;"></div>
+		<div id="detail_body">
+			<!--面包屑-->
+			<div class="breadcrumbs">
+				<ul class="history">
+					<li><a href="../index.html">首页</a></li>
+					<li><span>&gt;</span><a href="women_goods.html">女士</a></li>
+					<li><span>&gt;</span><a href="goods_list.html">EMILIO PUCCI </a><span>/</span> </li>
+					<li>彩色印花露肩剪裁上衣 - 商品代码 ：EP6-108-00156</li>
+				</ul>
+			</div>
+			<!--所选商品展示区-->
+			<div class="product_main">
+				<div class="product_view">
+					<div class="product_view_big">
+						<img src="../img/detail/EP6-108-00157a_big.jpg" />
+					</div>
+					<div class="product_view_small">
+						<ul>
+							<li><img src="../img/detail/EP6-108-00157u_small.jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157a_small.jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157i_small.jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157l_small.jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157t_small.jpg"/></li>
+							
+						</ul>
+						
+					</div>
+				</div>
+				<div class="product_info">
+					<div class="product_title">
+						<p>EMILIO PUCCI</p>
+						<a href="#"><img src="../css/img/goods_list/share_weibo.png"/>分享</a>
+					</div>
+					<div class="product_name">
+						彩色印花露肩剪裁上衣
+					</div>
+					<div class="product_price">
+						<span class="cut_price">￥<b>1999</b></span>
+						<span class="before_price">￥<b>15160</b></span>
+						<span class="off_now">1.4折</span>
+					</div>
+					<div class="cuxiao">
+						<img src="../css/img/goods_list/icon_sales.png" />
+						<span>满688元全场免运（海外直发商品除外）</span>
+					</div>
+					<div class="product_choselist">
+						<p>颜色:<strong>彩色</strong></p>
+						<ul>
+							<li><a><img src="../img/detail/EP6-108-00157a_small.jpg"/>彩色</a></li>
+						</ul>
+						<p>意大利</p>
+					</div>
+					<div class="product_chose_size">
+						<ul class="clearfix">
+							<li>
+								<span>38</span>
+								<div class="size_pop">
+									<div class="pop_top">
+										<div class="top_bg"></div>
+									</div>
+									<div class="pop_txt">
+										<p>规格/号型：<b>160/84A</b></p>
+										<p>【详请参考尺寸测量信息】</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span>42</span>
+								<div class="size_pop">
+									<div class="pop_top">
+										<div class="top_bg"></div>
+									</div>
+									<div class="pop_txt">
+										<p>规格/号型：<b>160/84A</b></p>
+										<p>【详请参考尺寸测量信息】</p>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="product_chose_num">
+						<p>数量</p>
+						<div class="count_num">
+							<span class="delete_num">-</span>
+							<span class="buy_num">1</span>
+							<span class="add_num">+</span>
+						</div>
+					</div>
+					<div class="product_traceday">
+						<p>预计出库日期:<b> 2016年10月14日</b></p>
+					</div>
+					<div class="btn_incar">
+						<img src="../css/img/goods_list/icon_buy.png" />
+						加入购物袋
+					</div>
+					<div class="cutdown_time" class="clearfix">
+						<div class="cut_info">
+							<strong>限时抢购</strong>
+							<em>活动剩余</em>
+						</div>
+						<div class="cut_time">
+							<strong class="day">03</strong>
+							<span>天</span>
+							<strong class="hours">11</strong>
+							<span>时</span>
+							<strong class="minute">02</strong>
+							<span>分</span>
+							<strong class="sec">11</strong>
+							<span>秒</span>
+						</div>
+					</div>
+					<div class="after_sale" class="clearfix">
+						<span class="really">官方授权正品</span>
+						<span class="sevenday">7天无理由退货</span>
+					</div>
+				</div>
+			</div>
+			<div class="main">
+				<h2 class="main_head">
+					<strong>SIZE INFO</strong>
+					<p>尺寸信息</p>
+				</h2>
+				<div class="size_master">
+					<div class="size_master_top">
+						<p>单位: CM</p>
+						<p><a href="#">尺码指南</a></p>
+					</div>
+					<div class="size_table">
+						<table class="size_table_head">
+							<tr><th>品牌尺寸</th></tr>
+							<tr><th>规格型号</th></tr>
+							<tr><th>衣长</th></tr>
+							<tr><th>胸围</th></tr>
+							<tr><th>肩宽</th></tr>
+							<tr><th>袖长</th></tr>
+						</table>
+						<table class="size_table_body">
+							<tr><td>38</td><td>42</td></tr>
+							<tr><td>160/84A</td><td>170/92A</td></tr>
+							<tr><td>69</td><td>71</td></tr>
+							<tr><td>94</td><td>102</td></tr>
+							<tr><td>30</td><td>33</td></tr>
+							<tr><td>50</td><td>52</td></tr>
+						</table>
+					</div>
+					<!--商品信息-->
+					<div class="product_news">
+						<h2 class="main_head">
+							<strong>PRODUCT INFO</strong>
+							<p>商品信息</p>
+						</h2>
+						<p class="new_txt">时尚的色系，搭配宽松的剪裁，以及点睛造型的露肩设计，勾勒出优雅气质。</p>
+						<div class="new_content">
+							<ul>
+								<li><span>产地：</span><strong>意大利</strong></li>
+								<li><span>品牌属地：</span><strong>意大利</strong></li>
+								<li><span>颜色：</span><strong>彩色</strong></li>
+								<li><span>材质：</span><strong>100%桑蚕丝</strong></li>
+							</ul>
+						</div>
+					</div>
+					<!--保养-->
+					<div class="product_safe">
+						<h2>保养</h2>
+						<p>&bull;&nbsp; 不可水洗不可漂白不可翻转干燥低温熨烫常规干洗</p>
+						<p>*图片及相关信息仅供参照，因拍摄灯光及不同显示器色差等问题可能造成商品图片与实物的色差，一切以实物为准。</p>
+						<p>*关于商品价格的补充说明：灰色划线价格为建议市场零售价，并非商品原价；红色标价为魅力惠实时零售价。</p>
+					</div>
+					<!--大图-->
+					<div class="biger_images" class="clearfix">
+						<ul class="clearfix">
+							<li><img src="../img/detail/EP6-108-00157a_big.jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157j(1).jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157t_big.jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157k(1).jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157i_big.jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157l(1).jpg"/></li>
+							<li><img src="../img/detail/EP6-108-00157u_big.jpg"/></li>
+						</ul>
+					</div>
+				</div>
+				<!--品牌历史-->
+				<div class="brandstory">
+					<h2 class="main_head">
+						<strong>EMILIO PUCCI</strong>
+					</h2>
+					<div class="story_bg">
+						<div class="story_cover"></div>
+						<div class="story_content">
+							<p class="story_txt">品牌创始人 Emilio Pucci BARSENTO侯爵生于1914年，成长在佛罗伦萨的一个古老贵族家族，作为当代时尚界举足轻重的主要影响人物之一，Pucci传奇性的成为“意大利制造”这一名词诞生的源头及意大利运动服饰被世界所认可的里程碑。Emilio Pucci于1947年亲自设计滑雪服，成为踏入时尚界的重要契机，深受运动员血统和空军经历影响，Emili...</p>
+							<p class="story_more"><a href="#">查看更多</a></p>
+						</div>
+						
+					</div>
+					
+				</div>
+				<!--猜你喜欢-->
+				<div class="mabylike">
+					<h2 class="main_head">
+						<strong>YOU MAY ALSO LIKE</strong>
+						<p>猜你喜欢</p>
+					</h2>
+					<ul class="img_list" class="clearfix">
+						<li>
+							<a href="#"><img src="../img/detail/PL7-115-00586a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+						<li>
+							<a href="#"><img src="../img/detail/SR7-127-00189a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+						<li>
+							<a href="#"><img src="../img/detail/FYY-121-00176a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+						<li>
+							<a href="#"><img src="../img/detail/SR7-127-00189a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--更多商品-->
+				<div class="recomemore">
+					<h2 class="main_head">
+						<strong>RECOMMENDATIONS</strong>
+						<p>更多商品</p>
+					</h2>
+					<ul class="img_list" class="clearfix">
+						<li>
+							<a href="#"><img src="../img/detail/EP6-108-00178a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+						<li>
+							<a href="#"><img src="../img/detail/EP6-106-00082a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+						<li>
+							<a href="#"><img src="../img/detail/EP6-106-00078a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+						<li>
+							<a href="#"><img src="../img/detail/EP6-108-00178a.jpg" /></a>
+							<div class="baseinfo">
+								<p class="brand_txt">Emilio Pucci</p>
+								<p class="gray_txt">彩色几何图案侧开衩上衣</p>
+								<p class="price_txt"><span class="now_red">￥599</span><span class="old_through">￥3,880</span><span class="off_price">84%OFF</span></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+</html>

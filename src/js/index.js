@@ -16,24 +16,46 @@ jQuery(function($){
 				console.log(docu_width);
 				//$("#carousel").children().children().children("img").width(1263);
 				//大轮播
-				$("#carousel").xcarousel({
-					width:docu_width-17,//外框-width
-					height:524,
-					page:true,//是否显示页码
-					autoPlay:true,//是否自动轮播
-					type:'x',//动画类型：水平滚动x, 垂直滚动y, 渐现效果fade
-					buttons:true,//是否显示前后按钮
-					speed:3000,//轮播图速度
+//				$("#carousel").xcarousel({
+//					width:docu_width-17,//外框-width
+//					height:524,
+//					page:true,//是否显示页码
+//					autoPlay:true,//是否自动轮播
+//					type:'x',//动画类型：水平滚动x, 垂直滚动y, 渐现效果fade
+//					buttons:true,//是否显示前后按钮
+//					speed:3000,//轮播图速度
+//				});
+				$("#carousel").myCarouselImg({
+					_width:docu_width,         //宽度
+					_height:524,        //高度
+					playType:"left",    //图片切换方式
+					isShowPage:true,    //是否显示小页码
+					isShowBtn:true,     //是否显示左右切换按钮
+					autoPlay:true,      //是否自动播放
+					playSpeed:3000,     //自动播放速度
+					isStopPlay:true,   //鼠标经过是否停止播放
+					clickOrover:"click"  //小页码是点击切换还是鼠标经过切换
 				});
 				//小轮播
-				$("#carousel_middle").xcarousel({
-					width:320,//ul-width
-					height:484,
-					page:true,//是否显示页码
-					autoPlay:true,//是否自动轮播
-					type:'x',//动画类型：水平滚动x, 垂直滚动y, 渐现效果fade
-					buttons:false,//是否显示前后按钮
-					speed:3000,//轮播图速度
+//				$("#carousel_middle").xcarousel({
+//					width:320,//ul-width
+//					height:484,
+//					page:true,//是否显示页码
+//					autoPlay:true,//是否自动轮播
+//					type:'x',//动画类型：水平滚动x, 垂直滚动y, 渐现效果fade
+//					buttons:false,//是否显示前后按钮
+//					speed:3000,//轮播图速度
+//				});
+				$("#carousel_middle").myCarouselImg({
+					_width:320,         //宽度
+					_height:484,        //高度
+					playType:"left",    //图片切换方式
+					isShowPage:true,    //是否显示小页码
+					isShowBtn:false,     //是否显示左右切换按钮
+					autoPlay:true,      //是否自动播放
+					playSpeed:3000,     //自动播放速度
+					isStopPlay:true,   //鼠标经过是否停止播放
+					clickOrover:"click"  //小页码是点击切换还是鼠标经过切换
 				});
 				
 				//弹出下拉菜单

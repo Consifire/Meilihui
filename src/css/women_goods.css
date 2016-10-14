@@ -1,6 +1,6 @@
 body,html{width:100%;font-family: "microsoft yahei";}
 
-#head_1{background:#f2f2f2;}
+#head_1{background:#f2f2f2;min-width: 1263px;width: 100%;}
 #head_1_content{position: relative;margin:0 auto; width:1000px;height:30px; }
 #head_1_content span{margin: 0 14px;}
 #head_1_content a{color:black;font-family: "微软雅黑";}
@@ -14,12 +14,12 @@ body,html{width:100%;font-family: "microsoft yahei";}
 .xinlang{background-image: url(img/base.png);background-position: -603px -325px;margin-left: 20px;padding: 0 !important;}
 .xinlang a{width: 20px;height: 30px;display: block;}
 /*logo*/
-#head_2{width: 100%;}
+#head_2{width: 100%;min-width: 1263px;}
 #head_2_content{margin:0 auto; width:1000px;height:90px;position: relative;}
 .logo{display: inline-block;float:left;width: 190px;height: 90px;background-image: url(img/base.png);background-repeat:none;background-position:-850px -294px;}
 .logo_next{color:#676767;font-size: 12px;font-size: Microsoft YaHei,Tahoma,Arial,Helvetica,sans-serif;display: inline-block;width: 135px;height: 90px;line-height:115px ;float: left;letter-spacing: 3px;padding-left: 10px;opacity: 0.8;}
 /*导航菜单*/
-#head_3{height: 42px;background: black;width: 100%;}
+#head_3{height: 42px;background: black;width: 100%;min-width: 1263px;}
 .head_3_active{position:fixed;top: 0px;z-index: 10;}
 #head_menu{width: 1000px;height: 42px;margin: 0 auto;}
 #head_menu>ul>li{float: left;color: white;white-space: nowrap;font-size: 14px;font-family: "微软雅黑"; line-height: 42px;position: relative;}
@@ -30,6 +30,10 @@ body,html{width:100%;font-family: "microsoft yahei";}
 .menu_right{float: right;padding-right: 10px; }
 .menu_right .split{padding: 0 15px;}
 .menu_right .bag{width: 24px;height: 22px;padding: 10px 0px;line-height:22px !important;color:#a8834e;text-align: center;background-image: url(img/base.png);background-repeat: no-repeat;background-position: -1016px -220.5px;}
+.incar_list li img{width: 30px;height: 50px;float: left;margin-left: 30px;}
+.incar_list li span{width: 40px;height: 40px;font-size: 12px;line-height: 40px;float: left;margin-left: 20px;text-align: center;}
+.remove_this{text-decoration: underline;}
+.remove_this:hover{color: #DB2725;}
 /*弹出app二维码样式*/
 .mobile{position: relative;}
 .mobileApp{position: absolute;background: white;border-left: 1px solid silver;border-right: 1px solid silver;border-bottom: 2px solid silver;opacity: 0.96;left: -2px;display: none;z-index: 5;box-shadow:0 0 10px #000;}
@@ -114,3 +118,5 @@ body,html{width:100%;font-family: "microsoft yahei";}
 .buttom-2 li{padding: 0 15px;cursor: pointer;}
 .buttom-3{width:483px;height: 12px;padding-top: 23px;letter-spacing: .5px;}
 .buttom-4{width: 180px;padding-top: 20px;}
+/*加载完提示框*/
+#prompt_message{width: 1000px;font-size: 30px;height: 50px;line-height: 50px;color: darksalmon;text-align: center;font-family: simsun;}

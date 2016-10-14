@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/reset.css" />
+		<link rel="stylesheet" href="../css/shop_car.css" />
+		
+		<script type="text/javascript" src="../js/jquery-1.12.0.js" ></script>
+		<script type="text/javascript" src="../js/cookie.js" ></script>
+		<script>
+			jQuery(function($){
+				$(".herit").load("women_goods.html",function(){
+					$(".inner_body").remove();
+					console.log("引用")
+					$(".car_body").insertBefore($(".buttom"));
+				});
+				//获取cookie数据
+				var goodsCookie=getCookie("goods");
+				//获取cookie数据显示商品
+				
+						if (goodsCookie) {
+							goodsArr=JSON.parse(goodsCookie);
+							var n=0;//数量
+							var m=0;//总价
+							for (var i=0;i<goodsArr.length;i++) {
+								//遍历取商品数
+								n+=parseInt(goodsArr[i].num);
+							}
+							m=n*goodsArr[0].unit;
+							//生成商品
+							 var $oUl= $("<ul/>").addClass("clearfix");
+		                    var $li1=  $("<li/>").addClass("car_check").appendTo($oUl);
+		                     $("<span class='checkall'></span>").appendTo($li1);
+		                     var $li2=$("<li/>").addClass("goods_content");
+		                     $("<a href='#' class='content_img'><img src='../img/detail/EP6-108-00157a_small.jpg'/></a>").appendTo($li2);
+		                     var $div1= $("<div/>").addClass("content_info");
+		                      $("<p class='content_brand'>Emilio Pucci</p>").appendTo($div1);
+		                      $("<p class='content_text'>彩色印花露肩剪裁上衣</p>").appendTo($div1);
+		                      $("<p class='content_color'>颜色：彩色</p>").appendTo($div1);
+		                      $("<p class='content_size'>尺寸：38</p>").appendTo($div1);
+		                     $div1.appendTo($li2);
+		                     $li2.appendTo($oUl);
+		                      $("<li class='unit_price'>1999.00</li>").appendTo($oUl);
+		                     var $li4= $("<li/>").addClass("shuliang");
+		                    
+		                     $("<span class='del'>-</span>").appendTo($li4);
+		                     $("<span class='num'>1</span>").appendTo($li4);
+		                     $("<span class='add'>+</span>").appendTo($li4);
+		                     
+		                     $li4.appendTo($oUl);
+		                     $("<li class='haveYhui'></li>").appendTo($oUl);
+		                     
+		                     $("<li class='xiaoji'>&yen;1999.00</li>").appendTo($oUl);
+		                     
+		                    var $li5= $("<li/>").addClass("delete_p");
+		                      $("<p class='remove'>删除</p>").appendTo($li5);
+		                      $li5.appendTo($oUl);
+		                    $oUl.appendTo($(".chosed_list"));  
+						
+							$(".num").html(n);
+							$(".xiaoji").html("&yen"+m);//小计
+						}
+				
+				//tab
+				$(".list_tab").find("a").eq(0).addClass("selected_tab");
+				$(".list_tab").find("a").click(function(){
+					$(this).addClass("selected_tab").siblings().removeClass("selected_tab");
+				});
+				//切换tab内容
+				$(".list_tab").find("a").click(function(){
+					var str=$(this).index();
+					$(".all_tab").children().eq(str).show().siblings().hide();
+				});
+				//优惠券tab
+				$(".tab_btn").find("span").click(function(){
+					var str=$(this).index();
+					$(".yhq_content").show();
+					$(this).removeClass("btn_addclass").siblings().addClass("btn_addclass");
+					$(".yhq_content").find("li").eq(str).show().siblings().hide();
+				});
+				$(".no_use").click(function(){
+					$(".yhq_content").hide();
+				});
+				//全选
+				$(".checkall").click(function(){
+					$(this).toggleClass("checkall_add");
+				});
+				$(".checkall").eq(0).click(function(){
+					//$().toggleClass("checkall_add");
+					if ($(this).is(".checkall_add")) {
+						$(".checkall").addClass("checkall_add");
+					}else{
+						$(".checkall").removeClass("checkall_add");
+					}
+				});
+				//数量加减
+				$(".del").click(function(){
+					var num=$(this).next(".num").html();
+					if (num>1) {
+						num--;
+						$(this).next(".num").html(num);//数量
+						var unit=$(this).parent().siblings(".unit_price").html()
+						unit=parseFloat(unit);
+						$(this).parent().siblings(".xiaoji").html("&yen"+num*unit);//小计
+					}
+				});
+				$(".add").click(function(){
+					var num=$(this).prev(".num").html();
+					if (num>=0) {
+						num++;
+						$(this).prev(".num").html(num);
+						var unit=$(this).parent().siblings(".unit_price").html()
+						unit=parseFloat(unit);
+						$(this).parent().siblings(".xiaoji").html("&yen"+num*unit);
+					}
+				});
+				//删除商品
+				$(".remove").click(function(){
+					$(this).parent().parent().remove();
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="herit"></div>
+		<div class="car_body">
+			<div class="car_title">
+				购物袋
+				<span>商品库存有限，建议尽快提交订单，闪购到心仪的商品；促销优惠将按比例分摊至商品中。</span>
+			</div>
+			<div class="youhui">
+				<p>
+					<a href="#" class="yh_type">全场</a>
+					满688元免运费
+					<a href="#" class="topage">去凑单&gt;</a>
+				</p>
+			</div>
+			<div class="list_tab">
+				<a>在售</a>
+				<a>心愿单</a>
+				<a>已失效</a>
+			</div>
+			<div class="all_tab">
+				<div class="tab_1">
+					<div class="list_title">
+						<ul>
+							<li class="select_all">
+								<span class="checkall"></span>
+								<span class="checktxt">全选</span>
+							</li>
+							<li class="list_name">商品信息</li>
+							<li>单价</li>
+							<li>数量</li>
+							<li>优惠</li>
+							<li>小计</li>
+							<li>操作</li>
+						</ul>
+					</div>
+					<div class="pakageType">
+						<span class="checkall"></span>
+						<h2>魅力惠直发</h2>
+					</div>
+					<div class="chosed_list">
+						<ul class="clearfix">
+							<li class="car_check">
+								<span class="checkall"></span>
+							</li>
+							<li class="goods_content">
+								<a href="#" class="content_img"><img src="../img/detail/EP6-108-00157a_small.jpg"/></a>
+								<div class="content_info">
+									<p class="content_brand">Emilio Pucci</p>
+									<p class="content_text">彩色印花露肩剪裁上衣</p>
+									<p class="content_color">颜色：彩色</p>
+									<p class="content_size">尺寸：38</p>
+								</div>
+							</li>
+							<li class="unit_price">1999.00</li>
+							<li class="shuliang">
+								<span class="del">-</span>
+								<span class="num">1</span>
+								<span class="add">+</span>
+							</li>
+							<li class="haveYhui">
+								
+							</li>
+							<li class="xiaoji">&yen;1999.00</li>
+							<li class="delete_p">
+								<p class="remove">删除</p>
+							</li>
+						</ul>
+					</div>
+					<div class="yhjuan">
+						<p class="tab_btn"><span>选择优惠券</span><span class="btn_addclass">输入优惠券</span></p>
+						<div class="yhq_content">
+							<ul class="clearfix">
+								<li>
+									<p class="no_red">您暂无优惠！</p>
+									<span class="no_use">取消使用</span>
+								</li>
+								<li style="display: none;">
+									<p>请输入您获得的优惠券代码：</p>
+									<p><input type="text"/></p>
+									<p><span class="submit">提交</span><span class="no_use">取消使用</span></p>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="paybox">
+						<ul>
+							<li><span class="checkall"></span>全选</li>
+							<li class="check_num">已选<span>0</span>件</li>
+							<li class="check_del">删除</li>
+							<li class="remove_all">清空售罄</li>
+							<li class="total_price">总价（不含运费）:<span>&yen;0.00</span></li>
+							<li class="topay">结算</li>
+						</ul>
+					</div>
+				</div>
+				<div class="tab_2">
+					<p class="shop_nothing">即将上新的商品可以加入心愿单啦！抢购快人一步，赶快行动吧~</p>
+				</div>
+				<div class="tab_3">
+					<p class="shop_nothing">活动结束的商品会显示在此</p>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+</html>

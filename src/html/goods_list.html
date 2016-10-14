@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/reset.css" />
+		<link rel="stylesheet" href="../css/goods_list.css" />
+		<script src="../js/cookie.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.12.0.js" ></script>
+		<script>
+			jQuery(function($){
+				//引用其他页面结构
+				$("#herit").load("women_goods.html",function(){
+					$(".inner_body").remove();
+					//根据json文件生成li
+					$.ajaxSetup({
+						type:"get",
+						url:"../ajax/goods_list.json",
+						async:true,
+						dataType:"json",
+						success:function(res){
+							console.log(res);
+							
+							$.each(res, function(idx,item) {
+								//划过出现块
+								var $li=$("<li/>");
+								var $ul=$("<ul/>");
+								var $over=$("<div/>").attr("class","product_pop_info");//整块划过块
+								var $select_bg=$("<div/>").attr("class","product_select_bg");//灰色块----1-1
+								//size---1-2
+								var $size_ul=$("<ul/>").attr("class","size_onbg");//尺寸列表
+								
+								var $size_li=$("<li/>");
+								var $size_li_no=$("<li/>");
+								var $no_size=$("<span/>").attr("class","goods_size_bg");//暂无尺寸
+								
+								
+								var $pop_up=$("<div/>").attr("class","pop-up");//尺寸弹出说明
+								var $box_top=$("<div/>").attr("class","box_top");
+								var $top_img=$("<div/>").attr("class","top_img");
+								$top_img.appendTo($box_top);
+								var $box_content=$("<div/>").attr("class","box_content");//尺寸内容
+								var $bli=$("<li/>");
+								var $box_ul=$("<ul/>");
+								$("<b/>").html("规格/号型：").appendTo($bli);
+								$bli.appendTo($box_ul);
+								var $bli2=$("<li/>");
+								$bli2.html(item.size).appendTo($box_ul);
+								$li.html("【详请参考尺寸测量信息】").appendTo($box_ul);
+								$box_ul.appendTo($box_content);
+								$box_top.appendTo($pop_up);
+								$box_content.appendTo($pop_up);
+								var $pop_up2=$pop_up;
+								
+								$no_size.html(item.no_size).appendTo($size_li_no);//无尺寸li
+								$pop_up.appendTo($size_li_no);
+								$("<span/>").html(item.have_size).appendTo($size_li);//有尺寸li
+								$pop_up2.appendTo($size_li);
+								$size_li.appendTo($size_ul);
+								$size_li_no.appendTo($size_ul);
+								
+								var $small_img=$("<div/>").attr("class","small_img");//小图---1-3
+								var $simg_ul=$("<ul/>");
+								var $simg_li_1=$("<li/>");
+								var $simg_li_2=$("<li/>");
+								var $simg_li_3=$("<li/>");
+								$("<img/>").attr("src",item.small_1).appendTo($simg_li_1);
+								$("<img/>").attr("src",item.small_2).appendTo($simg_li_2);
+								$("<img/>").attr("src",item.small_3).appendTo($simg_li_3);
+								$simg_li_1.appendTo($simg_ul);
+								$simg_li_2.appendTo($simg_ul);
+								$simg_li_3.appendTo($simg_ul);
+								$simg_ul.appendTo($small_img);
+								
+								$select_bg.appendTo($over);
+								$size_ul.appendTo($over);
+								$small_img.appendTo($over);
+								
+								
+								//大图显示块--1
+								var $big_div=$("<div/>").attr("class","product_img");
+								var $label=$("<div/>").attr("class","product_label");
+								var $suc_p=$("<p/>").attr("class","success_goods").html(item.suc);
+								var $only_p=$("<p/>").attr("class","only_goods").html(item.only);
+								$suc_p.appendTo($label);
+								$only_p.appendTo($label);
+								var $big_a=$("<a/>").attr("href","detail.html");
+								var $big_img=$("<img/>").attr("src",item.big);
+								$big_img.appendTo($big_a);
+								$label.appendTo($big_div);
+								$big_a.appendTo($big_div);
+								
+								//商品详情内容---1
+								var $content=$("<div/>").attr("class","product_content");
+								var $content_1=$("<p/>");
+								
+								$("<a/>").attr("href","detail.html").html(item.brand).appendTo($content_1);
+								var $content_2=$("<p/>");
+								$("<a/>").attr("href","detail.html").html(item.info).appendTo($content_2);
+								var $content_3=$("<p/>");
+								var $now=$("<span/>").attr("class","red_now");
+								$now.html(item.now_price).appendTo($content_3);
+								var $old=$("<span/>").attr("class","black_old");
+								$old.html(item.old_price).appendTo($content_3);
+								console.log($content_1.html())
+								$content_1.appendTo($content);
+								$content_2.appendTo($content);
+								$content_3.appendTo($content);
+								
+								//总追加
+								var $goods_li=$("<li/>").attr("class","listproduct");
+								$over.appendTo($goods_li);
+								$big_div.appendTo($goods_li);
+								$content.appendTo($goods_li);
+								$goods_li.appendTo($("#list"));
+								
+								
+							});
+							//绑定在ajax新生成的对象上的事件的js应写在ajax请求成功生成对象后面才能生效（ajax请求可能很久才执行完，所以写在请求成功后）
+							//划过大图显示内容
+							$("#list").find(".product_img").on("mouseenter",function(){
+								$(this).siblings(".product_pop_info").show();
+								$(this).next().hide();
+							});
+							//划出li恢复
+							$("#list").find(".listproduct").on("mouseleave",function(){
+								$(this).children(".product_pop_info").hide();
+								$(this).children(".product_content").show();
+							});
+							//划过尺寸出现尺寸说明
+							$(".size_onbg").children("li").on("mouseenter",function(){
+								$(this).children(".pop_up").show();
+							}).on("mouseleave",function(){
+								$(this).children(".pop_up").hide();
+							});
+							//划过小图出现相应的大图
+							$(".small_img").find("img").on("mouseenter",function(){
+								var src=$(this).attr("src");
+								var pattern = ".jpg";
+								src = src.replace(new RegExp(pattern), "_big.jpg");
+								console.log(src);
+								$(this).parents(".listproduct").find(".big_img").attr("src",src);
+							});
+						}
+					});
+					$.ajax();
+					// 给window绑定scroll事件，当差不多滚动到底部是加载更多内容
+					$(window).on('scroll',function(){
+						// 获取滚动条滚动过的距离
+						var scrollTop = $(window).scrollTop();
+						console.log(scrollTop)
+						console.log($(document).height() - $(window).height() - 800)
+						// 当差不多滚动到底部是加载更多内容
+						console.log($("#list").children("li").length)
+						if ($("#list").children("li").length<100) {
+							if(scrollTop >= $(document).height() - $(window).height() - 100){
+								$.ajax();
+							}
+						}else{
+							return false;
+						}
+						
+					});
+					
+					$("#main_body").insertBefore($(".buttom"));
+					$(function(){ 
+					    show_time();
+					}); 
+					 
+					function show_time(){ 
+					    var time_start = new Date().getTime(); //设定当前时间
+					    var time_end =  new Date("2016/10/15 00:00:00").getTime(); //设定目标时间
+					    // 计算时间差 
+					    var time_distance = time_end - time_start; 
+					    // 天
+					    var int_day = Math.floor(time_distance/86400000) 
+					    time_distance -= int_day * 86400000; 
+					    // 时
+					    var int_hour = Math.floor(time_distance/3600000) 
+					    time_distance -= int_hour * 3600000; 
+					    // 分
+					    var int_minute = Math.floor(time_distance/60000) 
+					    time_distance -= int_minute * 60000; 
+					    // 秒 
+					    var int_second = Math.floor(time_distance/1000) 
+					    // 时分秒为单数时、前面加零 
+					    if(int_day < 10){ 
+					        int_day = "0" + int_day; 
+					    } 
+					    if(int_hour < 10){ 
+					        int_hour = "0" + int_hour; 
+					    } 
+					    if(int_minute < 10){ 
+					        int_minute = "0" + int_minute; 
+					    } 
+					    if(int_second < 10){
+					        int_second = "0" + int_second; 
+					    } 
+					    // 显示时间 
+					    $(".count_time").html(int_day+"天"+int_hour+"时"+int_minute+"分"+int_second+"秒");
+					    // 设置定时器
+					    setTimeout(show_time,1000); 
+					}
+				});
+				
+				
+				//划过大图显示内容
+				$("#list").find(".product_img").on("mouseenter",function(){
+					$(this).siblings(".product_pop_info").show();
+					$(this).next().hide();
+				});
+				//划出li恢复
+				$("#list").find(".listproduct").on("mouseleave",function(){
+					$(this).children(".product_pop_info").hide();
+					$(this).children(".product_content").show();
+				});
+				//划过尺寸出现尺寸说明
+				$(".size_onbg").children("li").on("mouseenter",function(){
+					$(this).children(".pop_up").show();
+				}).on("mouseleave",function(){
+					$(this).children(".pop_up").hide();
+				});
+				//划过小图出现相应的大图
+				$(".small_img").find("img").on("mouseenter",function(){
+					var src=$(this).attr("src");
+					var pattern = ".jpg";
+					src = src.replace(new RegExp(pattern), "_big.jpg");
+					console.log(src);
+					$(this).parents(".listproduct").find(".big_img").attr("src",src);
+				});
+				
+				//监听滚动条————悬浮块
+				$(window).on('scroll',function(){
+						// 获取滚动条滚动过的距离
+					var scrollTop = $(window).scrollTop();
+							// 当差不多滚动到指定位置悬浮
+					console.log(scrollTop)		
+					if(scrollTop >=440){
+						$(".searchContentDiv").addClass("searchContentDiv_addclass");
+					}else{
+						$(".searchContentDiv").removeClass("searchContentDiv_addclass");
+					}
+				});
+				//点击筛选条件事件
+				$(".selected_buttom").find("li").click(function(){
+					$(this).children("span").toggleClass("selected_bg");
+					$("<li/>").html($(this).text()+"&nbsp;&nbsp;&times;").appendTo($(".attrs"));
+					
+					//出现已筛选条件
+					if ($(".selected_buttom").find(".selected_bg")) {
+						$(".selected-attrs").show();
+					} else{
+						$(".selected-attrs").hide();
+					}
+				});
+				//清空筛选条件
+				$(".reset-filters").click(function(){
+					$(".attrs").empty();
+					$(".selected_buttom").find("span").removeClass("selected_bg");
+					$(".selected-attrs").hide();
+				});
+				
+			});
+		</script>
+	</head>
+	<body>
+		<div id="herit"></div>
+		<div id="main_body">
+			<!--面包屑和倒计时-->
+			<div class="breadcrumbs">
+				<ul class="history">
+					<li><a href="../index.html">首页</a></li>
+					<li><span>&gt;</span><a href="women_goods.html">女士</a></li>
+					<li><span>&gt;</span>EMILIO PUCCI </li>
+				</ul>
+				<div class="countDown">
+					<span class="count_label">活动剩余</span>
+					<span class="count_time"></span>
+				</div>
+			</div>
+			<!--面包屑和倒计时-end-->
+			<h2>
+				EMILIO PUCCI &nbsp;不容错过的精选特卖&nbsp;
+			 	<span class="red_off">0.6</span>
+            	<span class="red_txt">折起</span>
+
+			</h2>
+			<!--优惠项目-->
+			<div class="box_effect">
+				<ul>
+					<li class="box_effect_bg">
+						<div class="box_effect_show">
+							<p class="box_txt">满688元全场免运（海外直发商品除外）</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--种类选择-->
+			<div class="nav-attrs">
+				<div class="selected-attrs">
+					<label class="list_label">已选条件：</label>
+					<ul class="attrs">
+						
+					</ul>
+					<p class="reset-filters">清空筛选条件</p>
+				</div>
+				<div class="filter-list">
+					<div class="list_label">
+						种类：
+					</div>
+					<div class="selected_buttom">
+						<ul>
+							<li>
+								<span class="not_selected"></span>
+								T恤&衬衫
+							</li>
+							<li>
+								<span class="not_selected"></span>
+								凉鞋/拖鞋
+							</li>
+							<li>
+								<span class="not_selected"></span>
+								卫衣毛衣
+							</li>
+							<li>
+								<span class="not_selected"></span>
+								大衣/外套
+							</li>
+							<li>
+								<span class="not_selected"></span>
+								裤子
+							</li>
+							<li>
+								<span class="not_selected"></span>
+								连衣裙/短裙
+							</li>
+							<li>
+								<span class="not_selected"></span>
+								靴子
+							</li>
+							<li>
+								<span class="not_selected"></span>
+								高跟鞋
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--默认排序-->
+			<div class="searchContentDiv">
+				<a class="btn_reset_sorter">默认排序</a>
+				<a class="order_price">价格</a>
+				<div class="ui-page-s-wrap">
+					<p>
+						<a class="ui-page-s-len">1/4</a>
+						<a class="ui-page-s-prev"></a>
+						<a class="ui-page-s-next"></a>
+						
+					</p>
+				</div>
+				<span class="ui-page-totalCount">共126个商品</span>
+			</div>
+			<!--商品陈列区-->
+			<div class="goods_show" >
+				<ul class="clearfix" class="goods" id="list">
+					<li class="listproduct">
+						<!--划过大图出现的尺寸和小图-->
+						<div class="product_pop_info">
+							<!--灰色块-->
+							<div class="product_select_bg">
+								
+							</div>
+							<!--size-->
+							<ul class="size_onbg">
+								<li>
+									<span class="goods_size_bg">42</span>
+									<div class="pop_up">
+										
+											<div class="box_top">
+												<div class="top_img"></div>
+											</div>
+											<div class="box_content">
+										 		<ul>
+													<li><b>规格/号型：</b></li>
+													<li>170/88A</li>
+													<li>【详请参考尺寸测量信息】</li>
+												</ul>
+											</div>
+									
+									</div>
+								</li>
+								<li>
+									<span >40</span>
+									<div class="pop_up">
+											<div class="box_top">
+												<div class="top_img"></div>
+											</div>
+											<div class="box_content">
+										 		<ul>
+													<li><b>规格/号型：</b></li>
+													<li>170/88A</li>
+													<li>【详请参考尺寸测量信息】</li>
+												</ul>
+											</div>
+									
+									</div>
+								</li>
+							</ul>
+							<!--小图区块-->
+							<div class="small_img">
+								<ul>
+									<li><img src="../img/goods_list/goods_1.jpg"/></li>
+									<li><img src="../img/goods_list/goods_2.jpg"/></li>
+									<li><img src="../img/goods_list/goods_3.jpg"/></li>
+								</ul>
+							</div>
+						</div>
+						<!--大图显示块-->
+						<div class="product_img">
+							<!--买手推荐、仅剩一件-->
+							<div class="product_label">
+								<p class="success_goods">买手推荐</p>
+								<p class="only_goods">仅剩一件</p>
+							</div>
+							<a href="detail.html">
+								<img src="../img/goods_list/goods_1_big.jpg" class="big_img"/>
+							</a>
+						</div>
+						<!--商品详情内容-->
+						<div class="product_content">
+							<p><a href="detail.html">SHELLIN</a></p>
+							<p><a href="detail.html">豆沙灰修身淑女羊毛大衣</a></p>
+							<p><span class="red_now">￥1,200</span><span class="black_old"> ￥5,500</span></p>
+						</div>
+					</li>
+					
+				</ul>
+			</div>
+			<!--跳转页-->
+			<div class="ui-page-bottom">
+				<div class="ui-page-wrap">
+					<div class="ui-page-num">
+						<span class="prev_pages">上一页</span>
+						<a class="ui-page">1</a>
+						<a class="ui-page">2</a>
+						<a class="ui-page">3</a>
+						<a class="ui-page">4</a>
+						
+						<span class="next_pages">下一页</span>
+					</div>
+					<div class="ui-page-skip">
+						共<span class="total_pages">4</span>页 , 到第
+						<input type="text" class="ui-page-skipTo"/>页
+						<button class="ui-btn-s">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -5,15 +5,115 @@
 		<title></title>
 		<link rel="stylesheet" href="../css/reset.css" />
 		<link rel="stylesheet" href="../css/women_goods.css" /> 
+		<script src="../js/cookie.js"></script>
 		<script src="../js/jquery-1.12.0.js"></script>
 		<script src="../js/women_goods.js"></script>
 		<script>
 			jQuery(function($){
-			
+				var username=getCookie("username");
+				console.log(username);
+				if (username) {
+					$("#username").html(username);
+				}	
+				//购物袋获取cookie
+						var goodsCookie=getCookie("goods");
+						var $bag=$(".bag");
+						var $total_price=$(".total_p");
+						//获取cookie数据
+						if (goodsCookie) {
+							goodsArr=JSON.parse(goodsCookie);
+							var n=0;//数量
+							var m=0;//总价
+							for (var i=0;i<goodsArr.length;i++) {
+								//遍历取商品数
+								n+=parseInt(goodsArr[i].num);
+							}
+							m=goodsArr[0].unit;
+							m=n*m;
+							console.log(m);
+							$bag.html(n);//数量
+							$total_price.html(m);//总价
+							$(".shopping_bag_list").find("p").remove();
+							 var $ul11=  $(".incar_list");
+                  			 var $Lia=  $("<li/>");
+                      		 $("<img src="+goodsArr[0].src+">").appendTo($Lia);
+                     	  	$("<span class='total_num'>"+n+"</span>").appendTo($Lia);
+                     	    $("<span class='all_price'>"+goodsArr[0].unit+"</span>").appendTo($Lia);
+                    	    $("<span class='remove_this'>删除</span>").appendTo($Lia);
+                 		    $Lia.appendTo($ul11);
+						}
+				var $ul=$(".women_goodslist").children("ul").eq(0);
+				//$ul.empty();
+				$.ajaxSetup({
+					type:"get",
+					url:"../ajax/women_goodslist.json",
+					async:true,
+					dataType:"json",
+					
+					success:function(res){
+						console.log(res);
+						
+						$.each(res, function(idx,item) {
+							var $li=$("<li/>");
+							var $a=$("<a/>").attr("href",item.good_url);
+							var $div=$("<div/>").attr("class","goods_txt");
+							var $la=$("<a/>").attr("class","left_txt").html(item.good_brand+"&nbsp"+item.good_type);
+							var $ra=$("<a/>").attr("class","right_txt").html("折起");
+							var $span=$("<span/>").attr("class","num_txt").html(item.good_off);
+							var $p1=$("<p/>").html(item.good_Promotions);
+							var $p2=$("<p/>").html(item.over_time+"&nbsp天后活动结束");
+							var $over=$("<div/>").attr("class","img_over");
+							console.log(item.good_off);
+							//上
+							$("<img />").attr("src",item.good_src).appendTo($a);
+							$p1.appendTo($over);
+							$p2.appendTo($over);
+							$over.appendTo($a);
+							//下
+							$la.appendTo($div);
+							$ra.appendTo($div);
+							$ra.prepend($span);
+							
+							$a.appendTo($li);
+							$div.appendTo($li);
+							$li.appendTo($ul);
+						});
+						//绑定在ajax新生成的对象上的事件的js应写在ajax请求成功生成对象后面才能生效（ajax请求可能很久才执行完，所以写在请求成功后）
+						$(".women_goodslist").find("li").hover(function(){
+							$(this).find(".img_over").show();//遮罩层
+							$(this).find("img").animate({width:340,height:212,margin:-10});//图片放大
+						},function(){
+							$(this).find(".img_over").hide();
+							$(this).find("img").animate({width:320,height:192,margin:0});
+						});
+					}
+				});
+				$.ajax();
+				// 懒加载效果
+				// 给window绑定scroll事件，当差不多滚动到底部是加载更多内容
+				$(window).on('scroll',function(){
+					// 获取滚动条滚动过的距离
+					var scrollTop = $(window).scrollTop();
+					console.log(scrollTop)
+					console.log($(document).height() - $(window).height() - 800)
+					// 当差不多滚动到底部是加载更多内容
+					console.log($ul.children("li").length)
+					if ($ul.children("li").length<180) {
+						if(scrollTop >= $(document).height() - $(window).height() - 500){
+							$.ajax();
+						}
+					} else{
+						$("#prompt_message").remove();
+						$("<p/>").attr("id","prompt_message").html("亲，新的商品还在江南皮革场生产，敬请期待哦！").appendTo($(".women_goodslist"));
+					}
+					
+				});
+				
 			});
 		</script>
 	</head>
 	<body>
+
 		<!--顶部start-->
 		
 		<div id="head_1">
@@ -21,7 +121,7 @@
 				<ul class="h_left">
 					<li class="zhuceyl"><img src="../img/index/zhuceyouli.gif" alt=""/><a href="html/register.html">注册有礼</a></li>
 					<li><span>|</span></li>
-					<li><a href="html/Login.html">登录</a></li>
+					<li><a href="html/Login.html" id="username">登录</a></li>
 					<li><span>|</span></li>
 					<li><a href="#">收藏</a></li>
 				</ul>
@@ -45,7 +145,7 @@
 		</div>
 		<div id="head_2">
 			<div id="head_2_content">
-				<a href="#" class="logo"></a>
+				<a href="../index.html" class="logo"></a>
 				<span class="logo_next">全球奢品&nbsp;官方授权</span>
 			</div>
 		</div>
@@ -58,10 +158,10 @@
 			<div id="head_menu">
 				<ul class="menu_left">
 					<li>
-						<a href="#" style="color: #db2726;">首页</a>
+						<a href="../index.html" style="color: #db2726;">首页</a>
 					</li>
 					<li>
-						<a href="#">女士</a>
+						<a href="women_goods.html">女士</a>
 						<div class="menu_sub_1" class="clearfix" >
 							<div class="sub_1">
 								<p>热门活动</p>
@@ -247,13 +347,21 @@
 				</ul>
 				<ul class="menu_right">
 					<li class="bag">0</li>
-					<li class="split">|</li>
+					<li class="split"><a href="shop_car.html">|</a></li>
 					<li style="position: relative;">
-						&yen;0.00
+						&yen;<span class="total_p">0.00</span>
 						<div class="shopping_bag_list">
 							<div class="close_bag">&Chi;</div>
 							<div>
 								<p>购物袋暂无商品</p>
+								<ul class="incar_list">
+									<li>
+										<img src="../img/detail/EP6-108-00157a_small.jpg">
+										<span class="total_num">1</span>
+										<span class="all_price">1999</span>
+										<span class="remove_this">删除</span>
+									</li>
+								</ul>
 							</div>
 						
 						</div>
@@ -268,7 +376,7 @@
 				<!--女士商品样式展列-->
 				<div class="women_goodslist">
 					<ul>
-						<li>
+						<!--<li>
 							<a href="#">
 									<img src="../img/women_goodslist/woman (1).jpg"/>
 									<div class="img_over"><p>购满1600元，减300元；满3000元，减600元</p><p>5&nbsp;天后活动结束</p></div>
@@ -310,7 +418,7 @@
 								<a class="left_txt">BLOCCO&nbsp;5&nbsp;女鞋</a>
 								<a class="right_txt"><span class="num_txt">2</span>折起</a>
 							</div>
-						</li>
+						</li>-->
 					</ul>
 				</div>
 				
@@ -985,4 +1093,5 @@
 			
 		</div>
 	</body>
+	
 </html>

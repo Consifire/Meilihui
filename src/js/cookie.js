@@ -1,9 +1,12 @@
 			//添加cookie
 			function setCookie(name,value,expires,path,domain,secure){
-				var cookieTxet=decodeURIComponent(name)+"="+decodeURIComponent(value);
-				if (expires instanceof Date) {
-					cookieTxet+=";expires="+expires;
-				}
+				var cookieTxet=name+"="+value;//decodeURIComponent(name)+“=”+decodeURIComponent(value)
+				
+				 var oDate=new Date();
+				 oDate.setDate(oDate.getDate()+expires);
+				
+					cookieTxet+=";expires="+oDate;
+			
 				if (path) {
 					cookieTxet+=";path="+path;
 				}
