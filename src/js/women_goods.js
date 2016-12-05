@@ -44,7 +44,7 @@
 				//[主体商品图]
 					
 				$(".women_goodslist").find("li").hover(function(){
-					
+					$(this).find("img").stop();
 					$(this).find(".img_over").show();//遮罩层
 					$(this).find("img").animate({width:340,height:212,margin:-10});//图片放大
 				},function(){
