@@ -135,7 +135,7 @@ body,html{width:100%;}
 .buttom-4{width: 180px;padding-top: 20px;}
 
 /*页面悬浮二维码*/
-.fixed_photo{width: 90px;/*height: 295px;*/border: 1px solid #ccc;text-align: center;position: fixed;right: -10px;bottom: 57px;background: white;}
+.fixed_photo{width: 90px;/*height: 295px;*/border: 1px solid #ccc;text-align: center;position: fixed;right: -10px;bottom: 57px;background: white;z-index:1001}
 .fixed_1{height: 50px;background: black;font-size: 12px;font-weight: bold;line-height: 22px;}
 .fixed_1_red{color: red;letter-spacing: 3px;}
 .fixed_1_white{color: white;}
